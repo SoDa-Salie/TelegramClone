@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">TelegramClone</string>
+    <string name="create_group">Создать группу</string>
+    <string name="create_secret_chat">Создать секретный чат</string>
+    <string name="create_channel">Создать канал</string>
+    <string name="contacts">Контакты</string>
+    <string name="phone">Звонки</string>
+    <string name="favorites">Избранное</string>
+    <string name="settings">Настройки</string>
+    <string name="invate">Пригласить друзей</string>
+    <string name="faq">FAQ</string>
 </resources>
