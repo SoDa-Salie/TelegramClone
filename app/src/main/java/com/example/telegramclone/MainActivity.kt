@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.telegramclone.databinding.ActivityMainBinding
+import com.example.telegramclone.ui.ChatsFragment
+import com.example.telegramclone.ui.SettingsFragment
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -33,11 +35,16 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         initFields()
         initFunc()
+
+        //Методы
+
     }
 
     private fun initFunc() {
         // Здеся вся функциональность активности
         setSupportActionBar(mToolbar)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.dataContainer, ChatsFragment()).commit()
         createHeader()
         createDrawer()
     }
@@ -114,7 +121,12 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    Toast.makeText(applicationContext, position.toString(), Toast.LENGTH_SHORT).show()
+                    when(position) {
+                        7 -> supportFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.dataContainer, SettingsFragment()).commit()
+                    }
+
                     return false
                 }
             })
