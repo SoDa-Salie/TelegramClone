@@ -9,6 +9,16 @@
     <string name="settings">Настройки</string>
     <string name="invate">Пригласить друзей</string>
     <string name="faq">FAQ</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Settings fragment-->
+    <string name="settings_default_username">Sladkaya Bulka</string>
+    <string name="settings_default_status">в сети</string>
+    <string name="settings_text_account">Аккаунт</string>
+    <string name="settings_label_phone_number">Нажмите, чтобы изменить номер телефона</string>
+    <string name="settings_default_phone_number">+999999999</string>
+    <string name="settings_default_login">Sladkaya Bulka</string>
+    <string name="settings_label_login">Имя пользователя</string>
+    <string name="settings_default_bio">О себе</string>
+    <string name="settings_label_bio">Напишите немного о себе</string>
+
 </resources>
