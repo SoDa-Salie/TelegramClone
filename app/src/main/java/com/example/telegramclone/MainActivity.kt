@@ -1,8 +1,10 @@
 package com.example.telegramclone
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.example.telegramclone.activities.RegisterActivity
 import com.example.telegramclone.databinding.ActivityMainBinding
 import com.example.telegramclone.ui.fragments.ChatsFragment
 import com.example.telegramclone.ui.objects.AppDrawer
@@ -27,11 +29,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFunc() {
-        // Здеся вся функциональность активности
-        setSupportActionBar(mToolbar)
-        mAppDrawer.create()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.dataContainer, ChatsFragment()).commit()
+        if (false) {
+            setSupportActionBar(mToolbar)
+            mAppDrawer.create()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(
+                    R.id.dataContainer,
+                    ChatsFragment()
+                ).commit()
+        } else {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+
+        }
+
     }
 
     private fun initFields() {

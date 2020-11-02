@@ -5,10 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".activities.RegisterActivity">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/mainToolBar"
+            android:id="@+id/registerToolBar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -17,11 +17,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/dataContainer"
+            android:id="@+id/registerDataContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mainToolBar"/>
+            app:layout_constraintTop_toBottomOf="@id/registerToolBar"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
