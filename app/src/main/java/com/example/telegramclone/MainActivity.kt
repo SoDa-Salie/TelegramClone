@@ -1,13 +1,14 @@
 package com.example.telegramclone
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.telegramclone.activities.RegisterActivity
 import com.example.telegramclone.databinding.ActivityMainBinding
 import com.example.telegramclone.ui.fragments.ChatsFragment
 import com.example.telegramclone.ui.objects.AppDrawer
+import com.example.telegramclone.utilities.replaceActivity
+import com.example.telegramclone.utilities.replaceFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,15 +33,10 @@ class MainActivity : AppCompatActivity() {
         if (false) {
             setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            supportFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.dataContainer,
-                    ChatsFragment()
-                ).commit()
+            replaceFragment(ChatsFragment())
         } else {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            replaceActivity(RegisterActivity())
+
 
         }
 
