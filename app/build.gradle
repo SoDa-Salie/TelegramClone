@@ -30,21 +30,25 @@ dependencies {
     //БД
     implementation platform('com.google.firebase:firebase-bom:26.0.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth:20.0.0'
 
 
-    //Менюха
-    implementation "com.mikepenz:materialdrawer:7.0.0"
+
+
 
     //required support lib modules
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.annotation:annotation:1.1.0"
-
     implementation "com.google.android.material:material:1.2.1"
-
     implementation "androidx.constraintlayout:constraintlayout:2.0.3"
+
+
 
     // Add for NavController support
     implementation "com.mikepenz:materialdrawer-nav:7.0.0"
+    implementation "com.mikepenz:materialdrawer:7.0.0"
+
+
 
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -53,9 +57,16 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+
+
+
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 

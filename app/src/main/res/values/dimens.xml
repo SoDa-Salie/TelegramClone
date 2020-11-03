@@ -5,7 +5,7 @@
     <dimen name="vertical_margin">10dp</dimen>
     <dimen name="smallText">14sp</dimen>
     <dimen name="vertical_large_margin">16dp</dimen>
-    <dimen name="appPadding">5dp</dimen>
+    <dimen name="appPadding">10dp</dimen>
 
 
 
