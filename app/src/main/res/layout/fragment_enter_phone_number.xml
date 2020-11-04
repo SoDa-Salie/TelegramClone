@@ -13,6 +13,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:autofillHints=""
+            android:hint="@string/register_phone_hint"
             style="@style/editText"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.telegramclone" >
-
+    package="com.example.telegramclone">
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +11,7 @@
         <activity android:name=".activities.RegisterActivity"
                   android:windowSoftInputMode="stateVisible|adjustResize"/>
 
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
