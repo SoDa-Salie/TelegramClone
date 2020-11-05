@@ -8,6 +8,8 @@
                   android:title="@string/settings_menu_change_name"
                   android:icon="@drawable/ic_btn_action_menu_change_name"
                   app:showAsAction="never"/>
+
+
             <item android:id="@+id/settings_menu_exit"
                   android:title="@string/settings_menu_exit"
                   android:icon="@drawable/ic_btn_action_menu_exit"
