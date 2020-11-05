@@ -9,7 +9,6 @@ import com.example.telegramclone.utilities.replaceActivity
 import com.example.telegramclone.utilities.replaceFragment
 import com.example.telegramclone.utilities.showToast
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.fragment_enter_phone_number.*
