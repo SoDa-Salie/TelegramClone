@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.telegramclone.activities.RegisterActivity
 import com.example.telegramclone.databinding.ActivityMainBinding
+import com.example.telegramclone.models.User
 import com.example.telegramclone.ui.fragments.ChatsFragment
 import com.example.telegramclone.ui.objects.AppDrawer
-import com.example.telegramclone.utilities.AUTH
-import com.example.telegramclone.utilities.initFirebase
-import com.example.telegramclone.utilities.replaceActivity
-import com.example.telegramclone.utilities.replaceFragment
+import com.example.telegramclone.utilities.*
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -21,14 +19,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mToolbar: Toolbar
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
     }
-
-
 
 
     override fun onStart() {
@@ -37,8 +32,6 @@ class MainActivity : AppCompatActivity() {
         initFunc()
         //Методы
     }
-
-
 
 
     private fun initFunc() {
@@ -53,13 +46,22 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
     private fun initFields() {
         // Метод инициализации полей
         mToolbar = mBinding.mainToolBar
         mAppDrawer = AppDrawer(this, mToolbar)
         AUTH = FirebaseAuth.getInstance()
         initFirebase()
+        initUser()
+    }
+
+
+    private fun initUser() {
+        REF_DATABASE_ROOT
+            .child(NODE_USERS)
+            .child(UID)
+            .addListenerForSingleValueEvent(AppValueEventListener {
+                USER = it.getValue(User::class.java) ?:User()
+            })
     }
 }
