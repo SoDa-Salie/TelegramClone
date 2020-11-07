@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
-                android:text="@string/settings_default_username"
+                tools:text="@string/settings_default_username"
                 android:textSize="@dimen/normalText"
                 android:layout_marginTop="@dimen/vertical_margin"
                 android:layout_marginStart="@dimen/horizontal_margin"
@@ -41,10 +41,11 @@
                 app:layout_constraintTop_toTopOf="@id/settings_user_photo"/>
 
         <TextView
+                android:id="@+id/settings_status"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccentDarker"
-                android:text="@string/settings_default_status"
+                tools:text="@string/settings_default_status"
                 android:textSize="@dimen/smallText"
                 android:layout_marginStart="@dimen/horizontal_margin"
                 app:layout_constraintStart_toEndOf="@+id/settings_user_photo"
@@ -75,7 +76,7 @@
 
         <TextView
                 android:id="@+id/settings_phone_number"
-                android:text="@string/settings_default_phone_number"
+                tools:text="@string/settings_default_phone_number"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/settings_btn_change_number_phone"
                 style="@style/normalText"/>
@@ -102,7 +103,7 @@
 
         <TextView
                 android:id="@+id/settings_username"
-                android:text="@string/settings_default_login"
+                tools:text="@string/settings_default_login"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/settings_btn_change_username"
                 style="@style/normalText"/>
@@ -129,7 +130,7 @@
 
         <TextView
                 android:id="@+id/settings_bio"
-                android:text="@string/settings_default_bio"
+                tools:text="@string/settings_default_bio"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/settings_btn_change_bio"
                 style="@style/normalText"/>
