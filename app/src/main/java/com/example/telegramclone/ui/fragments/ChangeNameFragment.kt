@@ -32,7 +32,7 @@ class ChangeNameFragment : BaseChangeFragment(R.layout.fragment_change_name) {
             val fullname = "$name $surname"
             REF_DATABASE_ROOT
                 .child(NODE_USERS)
-                .child(UID)
+                .child(CURRENT_UID)
                 .child(CHILD_FULLNAME)
                 .setValue(fullname)
                 .addOnCompleteListener {

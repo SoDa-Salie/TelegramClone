@@ -16,7 +16,7 @@ class ChangeBioFragment : BaseChangeFragment(R.layout.fragment_change_bio) {
         val newBio = settings_input_bio.text.toString()
         REF_DATABASE_ROOT
             .child(NODE_USERS)
-            .child(UID)
+            .child(CURRENT_UID)
             .child(CHILD_BIO)
             .setValue(newBio)
             .addOnCompleteListener {

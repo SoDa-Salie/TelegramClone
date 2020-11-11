@@ -1,19 +1,18 @@
 package com.example.telegramclone.ui.fragments
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import com.example.telegramclone.MainActivity
 import com.example.telegramclone.R
 import com.example.telegramclone.activities.RegisterActivity
-import com.example.telegramclone.utilities.AUTH
-import com.example.telegramclone.utilities.USER
-import com.example.telegramclone.utilities.replaceActivity
-import com.example.telegramclone.utilities.replaceFragment
+import com.example.telegramclone.utilities.*
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
-
 
 
     override fun onResume() {
@@ -21,7 +20,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         setHasOptionsMenu(true)
         initFields()
     }
-
 
 
     private fun initFields() {
@@ -36,9 +34,20 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         settings_username
             .text = USER.username
         settings_btn_change_username
-            .setOnClickListener { replaceFragment(ChangeUsernameFragment())}
+            .setOnClickListener { replaceFragment(ChangeUsernameFragment()) }
         settings_btn_change_bio
             .setOnClickListener { replaceFragment(ChangeBioFragment()) }
+        settings_btn_change_photo
+            .setOnClickListener { changePhotoUser() }
+    }
+
+
+    private fun changePhotoUser() {
+        CropImage.activity()
+            .setAspectRatio(1, 1)
+            .setRequestedSize(600, 600)
+            .setCropShape(CropImageView.CropShape.OVAL)
+            .start(APP_ACTIVITY)
     }
 
 
@@ -48,24 +57,19 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     }
 
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
 
-
-        when(item.itemId) {
-
+        when (item.itemId) {
 
 
             R.id.settings_menu_exit -> {
                 AUTH.signOut()
-                (activity as MainActivity).replaceActivity(RegisterActivity())
+                APP_ACTIVITY.replaceActivity(RegisterActivity())
             }
 
 
-
             R.id.settings_menu_change_name -> replaceFragment(ChangeNameFragment())
-
 
 
         }

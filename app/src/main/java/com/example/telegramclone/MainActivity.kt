@@ -1,6 +1,9 @@
 package com.example.telegramclone
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.telegramclone.activities.RegisterActivity
@@ -10,6 +13,7 @@ import com.example.telegramclone.ui.fragments.ChatsFragment
 import com.example.telegramclone.ui.objects.AppDrawer
 import com.example.telegramclone.utilities.*
 import com.google.firebase.auth.FirebaseAuth
+import com.theartofdev.edmodo.cropper.CropImage
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,12 +30,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     override fun onStart() {
         super.onStart()
+        APP_ACTIVITY = this
         initFields()
         initFunc()
         //Методы
     }
+
 
 
     private fun initFunc() {
@@ -59,9 +66,37 @@ class MainActivity : AppCompatActivity() {
     private fun initUser() {
         REF_DATABASE_ROOT
             .child(NODE_USERS)
-            .child(UID)
+            .child(CURRENT_UID)
             .addListenerForSingleValueEvent(AppValueEventListener {
                 USER = it.getValue(User::class.java) ?:User()
             })
+    }
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
+            && resultCode == RESULT_OK
+            && data != null
+        ) {
+            val uri = CropImage.getActivityResult(data).uri
+            val path = REF_STORAGE_ROOT
+                .child(FOLDER_PROFILE_IMAGE)
+                .child(CURRENT_UID)
+            path.putFile(uri)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        showToast(getString(R.string.toast_data_update))
+                    }
+                }
+        }
+    }
+
+
+
+    fun hideKeyboard() {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(window.decorView.windowToken, 0)
     }
 }
