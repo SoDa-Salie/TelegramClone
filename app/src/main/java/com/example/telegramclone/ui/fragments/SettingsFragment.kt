@@ -37,6 +37,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             .text = USER.username
         settings_btn_change_username
             .setOnClickListener { replaceFragment(ChangeUsernameFragment())}
+        settings_btn_change_bio
+            .setOnClickListener { replaceFragment(ChangeBioFragment()) }
     }
 
 

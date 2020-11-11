@@ -1,15 +1,11 @@
 package com.example.telegramclone.ui.fragments
 
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import com.example.telegramclone.MainActivity
 import com.example.telegramclone.R
 import com.example.telegramclone.utilities.*
 import kotlinx.android.synthetic.main.fragment_change_username.*
 import java.util.*
 
-class ChangeUsernameFragment : BaseFragment(R.layout.fragment_change_username) {
+class ChangeUsernameFragment : BaseChangeFragment(R.layout.fragment_change_username) {
 
     lateinit var mNewUsername: String
 
@@ -17,7 +13,6 @@ class ChangeUsernameFragment : BaseFragment(R.layout.fragment_change_username) {
 
     override fun onResume() {
         super.onResume()
-        setHasOptionsMenu(true)
         settings_input_username.setText(USER.username)
     }
 
@@ -31,22 +26,10 @@ class ChangeUsernameFragment : BaseFragment(R.layout.fragment_change_username) {
      * @property menu it's instance of Menu class.
      * @property inflater it's instance of MenuInflater class.
      */
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        (activity as MainActivity).menuInflater.inflate(R.menu.settings_menu_confirm, menu)
-    }
 
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.settings_confirm_change -> change()
-        }
-        return true
-    }
-
-
-
-    private fun change() {
+    override fun change() {
         mNewUsername = settings_input_username.text.toString().toLowerCase(Locale.getDefault())
         if (mNewUsername.isEmpty()) {
             showToast("Поле пустое")
