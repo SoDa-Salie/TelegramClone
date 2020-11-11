@@ -22,7 +22,15 @@ class ChangeUsernameFragment : BaseFragment(R.layout.fragment_change_username) {
     }
 
 
-
+    /**
+     * Callback method.
+     *
+     * Method already has implementation, there is just an example of kDoc.
+     *
+     * @author not me.
+     * @property menu it's instance of Menu class.
+     * @property inflater it's instance of MenuInflater class.
+     */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         (activity as MainActivity).menuInflater.inflate(R.menu.settings_menu_confirm, menu)
     }
