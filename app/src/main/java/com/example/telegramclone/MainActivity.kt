@@ -85,9 +85,24 @@ class MainActivity : AppCompatActivity() {
                 .child(FOLDER_PROFILE_IMAGE)
                 .child(CURRENT_UID)
             path.putFile(uri)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showToast(getString(R.string.toast_data_update))
+                .addOnCompleteListener { task1 ->
+                    if (task1.isSuccessful) {
+                        path.downloadUrl.addOnCompleteListener { task2 ->
+                            if (task2.isSuccessful) {
+                                val photoUrl = task2.result.toString()
+                                REF_DATABASE_ROOT
+                                    .child(NODE_USERS)
+                                    .child(CURRENT_UID)
+                                    .child(CHILD_PHOTO_URL)
+                                    .setValue(photoUrl)
+                                    .addOnCompleteListener {
+                                        if (it.isSuccessful) {
+                                            showToast(getString(R.string.toast_data_update))
+                                            USER.photoUrl = photoUrl
+                                        }
+                                    }
+                            }
+                        }
                     }
                 }
         }
