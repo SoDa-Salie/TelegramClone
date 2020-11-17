@@ -1,6 +1,8 @@
 package com.example.telegramclone.utilities
 
 import android.net.Uri
+import android.provider.ContactsContract
+import com.example.telegramclone.models.CommonModel
 import com.example.telegramclone.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -66,7 +68,7 @@ inline fun putImageToStorage(uri: Uri, path: StorageReference, crossinline  func
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-inline  fun initUser(crossinline  function: () -> Unit) {
+inline fun initUser(crossinline  function: () -> Unit) {
     REF_DATABASE_ROOT
         .child(NODE_USERS)
         .child(CURRENT_UID)
@@ -77,4 +79,32 @@ inline  fun initUser(crossinline  function: () -> Unit) {
             }
             function()
         })
+}
+
+
+fun initContacts() {
+    if (checkPermission(READ_CONTACTS)) {
+        val arrayContacts = arrayListOf<CommonModel>()
+        val cursor = APP_ACTIVITY.contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+        )
+        cursor?.let {
+            while (it.moveToNext()) {
+                val fullName = it.getString(it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                val phone = it.getString(it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                val newModel = CommonModel()
+                newModel.fullname = fullName
+                newModel.phone = phone.replace(Regex("[\\s,-]"),"")
+                arrayContacts.add(newModel)
+            }
+        }
+
+        cursor?.close()
+
+    }
+
 }
