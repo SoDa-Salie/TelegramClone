@@ -21,7 +21,8 @@ lateinit var REF_STORAGE_ROOT: StorageReference
 
 const val NODE_USERS = "users"
 const val NODE_USERNAMES = "usernames"
-
+const val NODE_PHONES = "phones"
+const val NODE_PHONES_CONTACTS = "phones_contacts"
 
 
 const val FOLDER_PROFILE_IMAGE = "profile_image"
@@ -104,7 +105,27 @@ fun initContacts() {
         }
 
         cursor?.close()
-
+        updatePhonesToDatabase(arrayContacts)
     }
 
+}
+
+fun updatePhonesToDatabase(arrayContacts: ArrayList<CommonModel>) {
+    REF_DATABASE_ROOT
+        .child(NODE_PHONES)
+        .addListenerForSingleValueEvent(AppValueEventListener {
+            it.children.forEach { snapshot ->
+                arrayContacts.forEach { contact ->
+                    if (snapshot.key == contact.phone) {
+                        REF_DATABASE_ROOT
+                            .child(NODE_PHONES_CONTACTS)
+                            .child(CURRENT_UID)
+                            .child(snapshot.value.toString())
+                            .child(CHILD_ID)
+                            .setValue(snapshot.value.toString())
+                            .addOnFailureListener { showToast(it.message.toString()) }
+                    }
+                }
+            }
+        })
 }

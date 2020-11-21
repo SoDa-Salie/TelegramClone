@@ -35,15 +35,23 @@ class EnterCodeFragment(val mPhoneNumber: String, val id: String) : Fragment(R.l
                     dataMap[CHILD_USERNAME] = uid
 
                     REF_DATABASE_ROOT
-                        .child(NODE_USERS)
-                        .child(uid)
-                        .updateChildren(dataMap)
-                        .addOnCompleteListener { task2 ->
-                            if (task2.isSuccessful) {
-                                showToast("Добро пожаловать")
-                                (activity as RegisterActivity).replaceActivity(MainActivity())
-                            } else showToast(task2.exception?.message.toString())
+                        .child(NODE_PHONES)
+                        .child(mPhoneNumber)
+                        .setValue(uid)
+                        .addOnFailureListener { showToast(it.message.toString()) }
+                        .addOnSuccessListener {
+                            REF_DATABASE_ROOT
+                                .child(NODE_USERS)
+                                .child(uid)
+                                .updateChildren(dataMap)
+                                .addOnSuccessListener {
+                                    showToast("Добро пожаловать")
+                                    (activity as RegisterActivity).replaceActivity(MainActivity())
+                                }
+                                .addOnFailureListener { showToast(it.message.toString()) }
                         }
+
+
                 } else showToast(task.exception?.message.toString())
             }
     }
