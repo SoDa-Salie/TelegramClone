@@ -25,7 +25,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/horizontal_margin"/>
+                android:layout_marginStart="@dimen/app_margin"/>
 
         <TextView
                 android:id="@+id/settings_full_name"
@@ -34,8 +34,8 @@
                 android:textColor="@color/colorAccent"
                 tools:text="@string/settings_default_username"
                 android:textSize="@dimen/normalText"
-                android:layout_marginTop="@dimen/vertical_margin"
-                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginTop="@dimen/app_small_margin"
+                android:layout_marginStart="@dimen/app_margin"
                 app:layout_constraintStart_toEndOf="@+id/settings_user_photo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/settings_user_photo"/>
@@ -47,7 +47,7 @@
                 android:textColor="@color/colorAccentDarker"
                 tools:text="@string/settings_default_status"
                 android:textSize="@dimen/smallText"
-                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginStart="@dimen/app_margin"
                 app:layout_constraintStart_toEndOf="@+id/settings_user_photo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/settings_full_name"/>
@@ -63,7 +63,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/smallText"
             android:textStyle="bold"
-            android:layout_marginStart="@dimen/horizontal_margin"
+            android:layout_marginStart="@dimen/app_margin"
             android:layout_marginTop="@dimen/vertical_large_margin"
             app:layout_constraintTop_toBottomOf="@id/settings_header_block"/>
 
@@ -156,7 +156,7 @@
             app:civ_border_color="@color/colorGray"
             app:civ_circle_background_color="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/horizontal_margin"
+            android:layout_marginEnd="@dimen/app_margin"
             app:layout_constraintTop_toBottomOf="@+id/settings_header_block"
             app:layout_constraintBottom_toBottomOf="@+id/settings_header_block"/>
 

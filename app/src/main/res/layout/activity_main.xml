@@ -8,20 +8,27 @@
         tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/mainToolBar"
+            android:id="@+id/main_toolbar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/mainToolBar"/>
+            style="@style/mainToolBar">
+
+        <include
+                android:id="@+id/toolbar_info"
+                layout="@layout/toolbar_info"
+                android:visibility="gone"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/dataContainer"
+            android:id="@+id/data_container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mainToolBar"/>
+            app:layout_constraintTop_toBottomOf="@id/main_toolbar"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

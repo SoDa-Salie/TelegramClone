@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.telegramclone.R
 import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
 
 fun showToast(message: String) {
     Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_SHORT).show()
@@ -26,14 +25,14 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, addStack: Boolean = tr
         supportFragmentManager.beginTransaction()
             .addToBackStack(null)
             .replace(
-                R.id.dataContainer,
+                R.id.data_container,
                 fragment
             )
             .commit()
     } else {
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.dataContainer,
+                R.id.data_container,
                 fragment
             )
             .commit()
@@ -44,7 +43,7 @@ fun Fragment.replaceFragment(fragment: Fragment) {
     fragmentManager?.beginTransaction()
         ?.addToBackStack(null)
         ?.replace(
-            R.id.dataContainer,
+            R.id.data_container,
             fragment
         )?.commit()
 }
