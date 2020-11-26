@@ -3,7 +3,7 @@ package com.example.telegramclone.utilities
 import android.net.Uri
 import android.provider.ContactsContract
 import com.example.telegramclone.models.CommonModel
-import com.example.telegramclone.models.User
+import com.example.telegramclone.models.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
@@ -14,10 +14,9 @@ import com.google.firebase.storage.StorageReference
 
 lateinit var AUTH: FirebaseAuth
 lateinit var CURRENT_UID: String
-lateinit var USER: User
+lateinit var USER: UserModel
 lateinit var REF_DATABASE_ROOT: DatabaseReference
 lateinit var REF_STORAGE_ROOT: StorageReference
-
 
 
 const val NODE_USERS = "users"
@@ -29,7 +28,6 @@ const val NODE_PHONES_CONTACTS = "phones_contacts"
 const val FOLDER_PROFILE_IMAGE = "profile_image"
 
 
-
 const val CHILD_ID = "id"
 const val CHILD_PHONE = "phone"
 const val CHILD_USERNAME = "username"
@@ -39,11 +37,10 @@ const val CHILD_PHOTO_URL = "photoUrl"
 const val CHILD_STATE = "state"
 
 
-
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
     CURRENT_UID = AUTH.currentUser?.uid.toString()
-    USER = User()
+    USER = UserModel()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     REF_STORAGE_ROOT = FirebaseStorage.getInstance().reference
 }
@@ -58,24 +55,24 @@ inline fun putUrlToDatabase(url: String, crossinline function: () -> Unit) {
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-inline fun getUrlFromStorage(path: StorageReference, crossinline  function: (url: String) -> Unit) {
+inline fun getUrlFromStorage(path: StorageReference, crossinline function: (url: String) -> Unit) {
     path.downloadUrl
         .addOnSuccessListener { function(it.toString()) }
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-inline fun putImageToStorage(uri: Uri, path: StorageReference, crossinline  function: () -> Unit) {
+inline fun putImageToStorage(uri: Uri, path: StorageReference, crossinline function: () -> Unit) {
     path.putFile(uri)
         .addOnSuccessListener { function() }
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-inline fun initUser(crossinline  function: () -> Unit) {
+inline fun initUser(crossinline function: () -> Unit) {
     REF_DATABASE_ROOT
         .child(NODE_USERS)
         .child(CURRENT_UID)
         .addListenerForSingleValueEvent(AppValueEventListener {
-            USER = it.getValue(User::class.java) ?:User()
+            USER = it.getValue(UserModel::class.java) ?: UserModel()
             if (USER.username.isEmpty()) {
                 USER.username = CURRENT_UID
             }
@@ -100,7 +97,7 @@ fun initContacts() {
                 val phone = it.getString(it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                 val newModel = CommonModel()
                 newModel.fullname = fullName
-                newModel.phone = phone.replace(Regex("[\\s,-]"),"")
+                newModel.phone = phone.replace(Regex("[\\s,-]"), "")
                 arrayContacts.add(newModel)
             }
         }
@@ -132,4 +129,7 @@ fun updatePhonesToDatabase(arrayContacts: ArrayList<CommonModel>) {
 }
 
 fun DataSnapshot.getCommonModel(): CommonModel =
-    this.getValue(CommonModel::class.java)?: CommonModel()
+    this.getValue(CommonModel::class.java) ?: CommonModel()
+
+fun DataSnapshot.getUserModel(): UserModel =
+    this.getValue(UserModel::class.java) ?: UserModel()

@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.example.telegramclone.activities.RegisterActivity
 import com.example.telegramclone.databinding.ActivityMainBinding
+
 import com.example.telegramclone.ui.fragments.ChatsFragment
 import com.example.telegramclone.ui.objects.AppDrawer
 import com.example.telegramclone.utilities.*
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initFields() {
-        mToolbar = mBinding.mainToolBar
+        mToolbar = mBinding./*main_toolbar*/mainToolbar
         mAppDrawer = AppDrawer()
     }
 
