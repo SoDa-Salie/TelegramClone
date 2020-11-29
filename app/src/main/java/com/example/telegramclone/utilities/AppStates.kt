@@ -1,5 +1,7 @@
 package com.example.telegramclone.utilities
 
+import com.example.telegramclone.database.*
+
 enum class AppStates(val state: String) {
     ONLINE("в сети"),
     OFFLINE("был недавно"),

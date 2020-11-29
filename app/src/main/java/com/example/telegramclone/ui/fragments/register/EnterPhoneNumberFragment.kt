@@ -1,13 +1,9 @@
-package com.example.telegramclone.ui.fragments
+package com.example.telegramclone.ui.fragments.register
 
 import androidx.fragment.app.Fragment
-import com.example.telegramclone.MainActivity
 import com.example.telegramclone.R
-import com.example.telegramclone.activities.RegisterActivity
-import com.example.telegramclone.utilities.AUTH
-import com.example.telegramclone.utilities.replaceActivity
-import com.example.telegramclone.utilities.replaceFragment
-import com.example.telegramclone.utilities.showToast
+import com.example.telegramclone.database.AUTH
+import com.example.telegramclone.utilities.*
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
@@ -17,19 +13,15 @@ import java.util.concurrent.TimeUnit
 class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) {
 
 
-
     private lateinit var mPhoneNumber: String
     private lateinit var mCallback: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-
 
 
     override fun onStart() {
 
 
-
         super.onStart()
         mCallback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
 
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
@@ -37,11 +29,10 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             showToast("Добро пожаловать")
-                            (activity as RegisterActivity).replaceActivity(MainActivity())
+                            restartActivity()
                         } else showToast(task.exception?.message.toString())
                     }
             }
-
 
 
             override fun onVerificationFailed(p0: FirebaseException) {
@@ -49,18 +40,15 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
             }
 
 
-
             override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
                 replaceFragment(EnterCodeFragment(mPhoneNumber, id))
             }
-
 
 
         }
 
         register_btn_next.setOnClickListener { sendCode() }
     }
-
 
 
     private fun sendCode() {
@@ -74,14 +62,13 @@ class EnterPhoneNumberFragment : Fragment(R.layout.fragment_enter_phone_number) 
     }
 
 
-
     private fun authUser() {
         mPhoneNumber = register_input_phone_number.text.toString()
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
             mPhoneNumber,
             60,
             TimeUnit.SECONDS,
-            activity as RegisterActivity,
+            APP_ACTIVITY,
             mCallback
         )
     }

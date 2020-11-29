@@ -4,14 +4,12 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.telegramclone.R
 import com.example.telegramclone.ui.fragments.ContactsFragment
 import com.example.telegramclone.ui.fragments.SettingsFragment
 import com.example.telegramclone.utilities.APP_ACTIVITY
-import com.example.telegramclone.utilities.USER
+import com.example.telegramclone.database.USER
 import com.example.telegramclone.utilities.downloadAndSetImage
 import com.example.telegramclone.utilities.replaceFragment
 import com.mikepenz.materialdrawer.AccountHeader
@@ -24,7 +22,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
 import com.mikepenz.materialdrawer.util.DrawerImageLoader
-import java.text.FieldPosition
 
 class AppDrawer() {
 
@@ -144,8 +141,8 @@ class AppDrawer() {
 
     private fun clickToItem(position: Int) {
         when (position) {
-            7 -> APP_ACTIVITY.replaceFragment(SettingsFragment())
-            4 -> APP_ACTIVITY.replaceFragment(ContactsFragment())
+            7 -> replaceFragment(SettingsFragment())
+            4 -> replaceFragment(ContactsFragment())
         }
     }
 

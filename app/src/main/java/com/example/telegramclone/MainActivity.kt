@@ -1,17 +1,21 @@
 package com.example.telegramclone
 
-
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.example.telegramclone.activities.RegisterActivity
+import com.example.telegramclone.database.AUTH
+import com.example.telegramclone.database.initFirebase
+import com.example.telegramclone.database.initUser
 import com.example.telegramclone.databinding.ActivityMainBinding
-
-import com.example.telegramclone.ui.fragments.ChatsFragment
+import com.example.telegramclone.ui.fragments.MainFragment
+import com.example.telegramclone.ui.fragments.register.EnterPhoneNumberFragment
 import com.example.telegramclone.ui.objects.AppDrawer
 import com.example.telegramclone.utilities.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,21 +32,22 @@ class MainActivity : AppCompatActivity() {
         APP_ACTIVITY = this
         initFirebase()
         initUser {
-            initContacts()
+            CoroutineScope(Dispatchers.IO).launch {
+                initContacts()
+            }
             initFields()
             initFunc()
         }
     }
 
 
-
     private fun initFunc() {
+        setSupportActionBar(mToolbar)
         if (AUTH.currentUser != null) {
-            setSupportActionBar(mToolbar)
             mAppDrawer.create()
-            replaceFragment(ChatsFragment(), false)
+            replaceFragment(MainFragment(), false)
         } else {
-            replaceActivity(RegisterActivity())
+            replaceFragment(EnterPhoneNumberFragment(), false)
         }
 
     }
