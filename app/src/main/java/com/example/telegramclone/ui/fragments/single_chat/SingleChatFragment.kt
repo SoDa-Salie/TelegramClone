@@ -3,6 +3,7 @@ package com.example.telegramclone.ui.fragments.single_chat
 import android.view.View
 import android.widget.AbsListView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.telegramclone.R
 import com.example.telegramclone.database.*
 import com.example.telegramclone.models.CommonModel
@@ -28,11 +29,12 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
     private var mCountMessages = 10
     private var mIsScrolling = false
     private var mSmoothScrollToPosition = true
-    private var mListListeners = mutableListOf<AppChildEventListener>()
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
 
     override fun onResume() {
         super.onResume()
+        mSwipeRefreshLayout = chat_swipe_refresh
         initToolBar()
         initRecyclerView()
     }
@@ -44,17 +46,16 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
             .child(CURRENT_UID)
             .child(contact.id)
         mRecyclerView.adapter = mAdapter
-
         mMessagesListener = AppChildEventListener {
-            mAdapter.addItem(it.getCommonModel())
-            if (mSmoothScrollToPosition) {
-                mRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
+            mAdapter.addItem(it.getCommonModel(), mSmoothScrollToPosition) {
+                if (mSmoothScrollToPosition) {
+                    mRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
+                }
+                mSwipeRefreshLayout.isRefreshing = false
             }
         }
-
-
         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-        mListListeners.add(mMessagesListener)
+
 
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
@@ -72,14 +73,16 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
                 }
             }
         })
+
+        mSwipeRefreshLayout.setOnRefreshListener { updateData() }
     }
 
     private fun updateData() {
         mSmoothScrollToPosition = false
         mIsScrolling = false
         mCountMessages += 10
+        mRefMessages.removeEventListener(mMessagesListener)
         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-        mListListeners.add(mMessagesListener)
     }
 
     private fun initToolBar() {
@@ -111,8 +114,8 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
     private fun initInfoToolbar() {
         if (mRecievingUser.fullname.isEmpty()) {
             mToolbarInfo.toolbar_chat_fullname.text = contact.fullname
-        } else mToolbarInfo.toolbar_chat_fullname.text = mRecievingUser.fullname
-
+        } else
+            mToolbarInfo.toolbar_chat_fullname.text = mRecievingUser.fullname
         mToolbarInfo.toolbar_chat_image.downloadAndSetImage(mRecievingUser.photoUrl)
         mToolbarInfo.toolbar_chat_status.text = mRecievingUser.state
     }
@@ -121,10 +124,6 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         super.onPause()
         mToolbarInfo.visibility = View.GONE
         mRefUser.removeEventListener(mListenerInfoToolbar)
-        mListListeners.forEach {
-            mRefMessages.removeEventListener(it)
-        }
-        
-
+        mRefMessages.removeEventListener(mMessagesListener)
     }
 }
