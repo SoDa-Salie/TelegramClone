@@ -2,6 +2,7 @@ package com.example.telegramclone.ui.fragments.single_chat
 
 import android.view.View
 import android.widget.AbsListView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.telegramclone.R
@@ -10,7 +11,6 @@ import com.example.telegramclone.models.CommonModel
 import com.example.telegramclone.models.UserModel
 import com.example.telegramclone.ui.fragments.BaseFragment
 import com.example.telegramclone.utilities.*
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_single_chat.*
@@ -30,38 +30,55 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
     private var mIsScrolling = false
     private var mSmoothScrollToPosition = true
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var mLayoutManager: LinearLayoutManager
+
 
 
     override fun onResume() {
         super.onResume()
-        mSwipeRefreshLayout = chat_swipe_refresh
+        initFields()
         initToolBar()
         initRecyclerView()
     }
 
+    private fun initFields() {
+        mSwipeRefreshLayout = chat_swipe_refresh
+        mLayoutManager = LinearLayoutManager(this.context)
+    }
+
+
     private fun initRecyclerView() {
+
         mRecyclerView = chat_recycle_view
         mAdapter = SingleChatAdapter()
-        mRefMessages = REF_DATABASE_ROOT.child(NODE_MESSAGES)
+        mRefMessages = REF_DATABASE_ROOT
+            .child(NODE_MESSAGES)
             .child(CURRENT_UID)
             .child(contact.id)
         mRecyclerView.adapter = mAdapter
+        mRecyclerView.setHasFixedSize(true)
+        mRecyclerView.isNestedScrollingEnabled = false
+        mRecyclerView.layoutManager = mLayoutManager
         mMessagesListener = AppChildEventListener {
-            mAdapter.addItem(it.getCommonModel(), mSmoothScrollToPosition) {
-                if (mSmoothScrollToPosition) {
+            val message = it.getCommonModel()
+            if (mSmoothScrollToPosition) {
+                mAdapter.addItemToBottom(message) {
                     mRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
                 }
-                mSwipeRefreshLayout.isRefreshing = false
+            } else {
+                mAdapter.addItemToTop(message) {
+                    mSwipeRefreshLayout.isRefreshing = false
+                }
             }
         }
+
+
         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-
-
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (mIsScrolling && dy < 0) {
+                if (mIsScrolling && dy < 0 && mLayoutManager.findFirstVisibleItemPosition() <= 3) {
                     updateData()
                 }
             }
@@ -77,6 +94,9 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         mSwipeRefreshLayout.setOnRefreshListener { updateData() }
     }
 
+
+
+
     private fun updateData() {
         mSmoothScrollToPosition = false
         mIsScrolling = false
@@ -84,6 +104,9 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         mRefMessages.removeEventListener(mMessagesListener)
         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
     }
+
+
+
 
     private fun initToolBar() {
         mToolbarInfo = APP_ACTIVITY.mToolbar.toolbar_info
@@ -111,6 +134,9 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         }
     }
 
+
+
+
     private fun initInfoToolbar() {
         if (mRecievingUser.fullname.isEmpty()) {
             mToolbarInfo.toolbar_chat_fullname.text = contact.fullname
@@ -119,6 +145,9 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         mToolbarInfo.toolbar_chat_image.downloadAndSetImage(mRecievingUser.photoUrl)
         mToolbarInfo.toolbar_chat_status.text = mRecievingUser.state
     }
+
+
+
 
     override fun onPause() {
         super.onPause()

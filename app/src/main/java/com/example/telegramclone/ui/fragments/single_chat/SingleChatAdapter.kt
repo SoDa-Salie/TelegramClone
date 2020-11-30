@@ -51,25 +51,29 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
 
     override fun getItemCount(): Int = mListMessagesCache.size
 
-    fun addItem(
+    fun addItemToTop(
         item: CommonModel,
-        toBottom: Boolean,
         onSuccess: () -> Unit
     ) {
-        if (toBottom) {
-            if (!mListMessagesCache.contains(item)) {
-                mListMessagesCache.add(item)
-                notifyItemInserted(mListMessagesCache.size)
-            }
-        } else {
-            if (!mListMessagesCache.contains(item)) {
-                mListMessagesCache.add(item)
-                mListMessagesCache.sortBy { it.timeStamp.toString() }
-                notifyItemInserted(0)
-            }
+        if (!mListMessagesCache.contains(item)) {
+            mListMessagesCache.add(item)
+            mListMessagesCache.sortBy { it.timeStamp.toString() }
+            notifyItemInserted(0)
         }
         onSuccess()
     }
+
+    fun addItemToBottom(
+        item: CommonModel,
+        onSuccess: () -> Unit
+    ) {
+        if (!mListMessagesCache.contains(item)) {
+            mListMessagesCache.add(item)
+            notifyItemInserted(mListMessagesCache.size)
+        }
+        onSuccess()
+    }
+
 }
 
 
