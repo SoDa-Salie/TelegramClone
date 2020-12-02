@@ -23,31 +23,22 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
 
     private fun initFields() {
-        settings_bio
-            .text = USER.bio
-        settings_full_name
-            .text = USER.fullname
-        settings_phone_number
-            .text = USER.phone
-        settings_status
-            .text = USER.state
-        settings_username
-            .text = USER.username
-        settings_btn_change_username
-            .setOnClickListener { replaceFragment(ChangeUsernameFragment()) }
-        settings_btn_change_bio
-            .setOnClickListener { replaceFragment(ChangeBioFragment()) }
-        settings_btn_change_photo
-            .setOnClickListener { changePhotoUser() }
-        settings_user_photo
-            .downloadAndSetImage(USER.photoUrl)
+        settings_bio.text = USER.bio
+        settings_full_name.text = USER.fullname
+        settings_phone_number.text = USER.phone
+        settings_status.text = USER.state
+        settings_username.text = USER.username
+        settings_btn_change_username.setOnClickListener { replaceFragment(ChangeUsernameFragment()) }
+        settings_btn_change_bio.setOnClickListener { replaceFragment(ChangeBioFragment()) }
+        settings_btn_change_photo.setOnClickListener { changePhotoUser() }
+        settings_user_photo.downloadAndSetImage(USER.photoUrl)
     }
 
 
     private fun changePhotoUser() {
         CropImage.activity()
             .setAspectRatio(1, 1)
-            .setRequestedSize(600, 600)
+            .setRequestedSize(250, 250)
             .setCropShape(CropImageView.CropShape.OVAL)
             .start(APP_ACTIVITY, this)
     }

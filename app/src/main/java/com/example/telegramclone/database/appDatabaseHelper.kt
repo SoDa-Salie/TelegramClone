@@ -6,6 +6,7 @@ import com.example.telegramclone.models.CommonModel
 import com.example.telegramclone.models.UserModel
 import com.example.telegramclone.utilities.APP_ACTIVITY
 import com.example.telegramclone.utilities.AppValueEventListener
+import com.example.telegramclone.utilities.TYPE_MESSAGE_IMAGE
 import com.example.telegramclone.utilities.showToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -34,6 +35,7 @@ const val NODE_MESSAGES = "messages"
 
 
 const val FOLDER_PROFILE_IMAGE = "profile_image"
+const val FOLDER_CHAT_IMAGES = "chat_images"
 
 
 const val CHILD_ID = "id"
@@ -48,6 +50,7 @@ const val CHILD_TEXT = "text"
 const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
+const val CHILD_IMAGE_URL = "imageUrl"
 
 
 fun initFirebase() {
@@ -224,3 +227,23 @@ fun setNameToDatabase(fullname: String) {
         }.addOnFailureListener { showToast(it.message.toString()) }
 }
 
+fun sendMessageAsImage(recievingUserId: String, imageUrl: String, messageKey: String) {
+    val refDialogUser = "$NODE_MESSAGES/$CURRENT_UID/$recievingUserId"
+    val refDialogRecievingUser = "$NODE_MESSAGES/$recievingUserId/$CURRENT_UID"
+    val mapMessage = hashMapOf<String, Any>()
+
+    mapMessage[CHILD_FROM] = CURRENT_UID
+    mapMessage[CHILD_TYPE] = TYPE_MESSAGE_IMAGE
+    mapMessage[CHILD_ID] = messageKey
+    mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+    mapMessage[CHILD_IMAGE_URL] = imageUrl
+
+    val mapDialog = hashMapOf<String, Any>()
+
+    mapDialog["$refDialogUser/$messageKey"] = mapMessage
+    mapDialog["$refDialogRecievingUser/$messageKey"] = mapMessage
+
+    REF_DATABASE_ROOT
+        .updateChildren(mapDialog)
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
