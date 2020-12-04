@@ -20,6 +20,8 @@
     <!--For user photo in single chat fragment-->
     <dimen name="toolbar_image_width">45dp</dimen>
     <dimen name="toolbar_image_height">45dp</dimen>
+    <dimen name="chat_image_width">180dp</dimen>
+    <dimen name="chat_image_height">180dp</dimen>
 
 
 </resources>
