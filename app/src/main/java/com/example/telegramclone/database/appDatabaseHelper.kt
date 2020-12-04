@@ -50,7 +50,7 @@ const val CHILD_TEXT = "text"
 const val CHILD_TYPE = "type"
 const val CHILD_FROM = "from"
 const val CHILD_TIMESTAMP = "timeStamp"
-const val CHILD_IMAGE_URL = "imageUrl"
+const val CHILD_FILE_URL = "fileUrl"
 
 
 fun initFirebase() {
@@ -60,7 +60,6 @@ fun initFirebase() {
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     REF_STORAGE_ROOT = FirebaseStorage.getInstance().reference
 }
-
 
 inline fun putUrlToDatabase(url: String, crossinline function: () -> Unit) {
     REF_DATABASE_ROOT
@@ -72,20 +71,17 @@ inline fun putUrlToDatabase(url: String, crossinline function: () -> Unit) {
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-
 inline fun getUrlFromStorage(path: StorageReference, crossinline function: (url: String) -> Unit) {
     path.downloadUrl
         .addOnSuccessListener { function(it.toString()) }
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-
 inline fun putImageToStorage(uri: Uri, path: StorageReference, crossinline function: () -> Unit) {
     path.putFile(uri)
         .addOnSuccessListener { function() }
         .addOnFailureListener { showToast(it.message.toString()) }
 }
-
 
 inline fun initUser(crossinline function: () -> Unit) {
     REF_DATABASE_ROOT
@@ -99,7 +95,6 @@ inline fun initUser(crossinline function: () -> Unit) {
             function()
         })
 }
-
 
 fun updatePhonesToDatabase(arrayContacts: ArrayList<CommonModel>) {
     if (AUTH.currentUser != null) {
@@ -131,13 +126,11 @@ fun updatePhonesToDatabase(arrayContacts: ArrayList<CommonModel>) {
     }
 }
 
-
 fun DataSnapshot.getCommonModel(): CommonModel =
     this.getValue(CommonModel::class.java) ?: CommonModel()
 
 fun DataSnapshot.getUserModel(): UserModel =
     this.getValue(UserModel::class.java) ?: UserModel()
-
 
 fun sendMessage(
     message: String,
@@ -168,7 +161,6 @@ fun sendMessage(
         .addOnFailureListener { showToast(it.message.toString()) }
 }
 
-
 fun updateCurrentUsername(newUsername: String) {
     REF_DATABASE_ROOT
         .child(NODE_USERS)
@@ -185,7 +177,6 @@ fun updateCurrentUsername(newUsername: String) {
         }
 }
 
-
 private fun deleteOldUsername(newUsername: String) {
     REF_DATABASE_ROOT
         .child(NODE_USERNAMES)
@@ -197,7 +188,6 @@ private fun deleteOldUsername(newUsername: String) {
             USER.username = newUsername
         }.addOnFailureListener { showToast(it.message.toString()) }
 }
-
 
 fun setBioToDatabase(newBio: String) {
     REF_DATABASE_ROOT
@@ -211,7 +201,6 @@ fun setBioToDatabase(newBio: String) {
             APP_ACTIVITY.supportFragmentManager.popBackStack()
         }.addOnFailureListener { showToast(it.message.toString()) }
 }
-
 
 fun setNameToDatabase(fullname: String) {
     REF_DATABASE_ROOT
@@ -236,7 +225,7 @@ fun sendMessageAsImage(recievingUserId: String, imageUrl: String, messageKey: St
     mapMessage[CHILD_TYPE] = TYPE_MESSAGE_IMAGE
     mapMessage[CHILD_ID] = messageKey
     mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
-    mapMessage[CHILD_IMAGE_URL] = imageUrl
+    mapMessage[CHILD_FILE_URL] = imageUrl
 
     val mapDialog = hashMapOf<String, Any>()
 
@@ -246,4 +235,11 @@ fun sendMessageAsImage(recievingUserId: String, imageUrl: String, messageKey: St
     REF_DATABASE_ROOT
         .updateChildren(mapDialog)
         .addOnFailureListener { showToast(it.message.toString()) }
+}
+
+fun getMessageKey(id: String) =
+    REF_DATABASE_ROOT.child(NODE_MESSAGES).child(CURRENT_UID).child(id).push().key.toString()
+
+fun uploadFileToStorage(uri: Uri, messageKey: String) {
+    showToast("Record OK")
 }
