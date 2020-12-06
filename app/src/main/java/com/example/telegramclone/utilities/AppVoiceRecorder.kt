@@ -1,11 +1,7 @@
 package com.example.telegramclone.utilities
 
 import android.media.MediaRecorder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.Exception
 
 class AppVoiceRecorder {
     private val mMediaRecorder = MediaRecorder()
@@ -44,7 +40,7 @@ class AppVoiceRecorder {
         try {
             mMediaRecorder.stop()
             onSuccess(mFile, mMessageKey)
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             showToast(e.message.toString())
             mFile.delete()
         }
@@ -53,7 +49,7 @@ class AppVoiceRecorder {
     fun releaseRecorder() {
         try {
             mMediaRecorder.release()
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             showToast(e.message.toString())
         }
     }

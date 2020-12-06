@@ -85,8 +85,9 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
                         //TODO stop record
                         chat_input_message.setText("")
                         chat_btn_voice.colorFilter = null
-                        mAppVoiceRecorder.stopRecord() { file, mMessageKey ->
-                            uploadFileToStorage(Uri.fromFile(file), mMessageKey)
+                        mAppVoiceRecorder.stopRecord { file, mMessageKey ->
+                            uploadFileToStorage(Uri.fromFile(file), mMessageKey, contact.id, TYPE_MESSAGE_VOICE)
+                            mSmoothScrollToPosition = true
                         }
                     }
                 }
@@ -199,16 +200,8 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         ) {
             val uri = CropImage.getActivityResult(data).uri
             val messageKey = getMessageKey(contact.id)
-            val path = REF_STORAGE_ROOT
-                .child(FOLDER_CHAT_IMAGES)
-                .child(messageKey)
-
-            putImageToStorage(uri, path) {
-                getUrlFromStorage(path) {
-                    sendMessageAsImage(contact.id, it, messageKey)
-                    mSmoothScrollToPosition = true
-                }
-            }
+                uploadFileToStorage(uri, messageKey, contact.id, TYPE_MESSAGE_IMAGE)
+                mSmoothScrollToPosition = true
         }
     }
 
