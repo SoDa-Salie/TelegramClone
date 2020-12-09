@@ -12,6 +12,8 @@ interface MessageView {
             get() = 0
         val MESSGAE_TEXT: Int
             get() = 1
+        val MESSAGE_VOICE: Int
+            get() = 2
     }
 
     fun getTypeView(): Int
