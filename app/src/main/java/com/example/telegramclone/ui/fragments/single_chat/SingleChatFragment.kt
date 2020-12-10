@@ -213,8 +213,9 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
         mRefMessages.removeEventListener(mMessagesListener)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         mAppVoiceRecorder.releaseRecorder()
+        mAdapter.onDestroy()
     }
 }

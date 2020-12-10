@@ -9,16 +9,16 @@ import com.example.telegramclone.ui.fragments.message_recycler_view.views.Messag
 import com.example.telegramclone.utilities.asTime
 import kotlinx.android.synthetic.main.message_item_text.view.*
 
-class HolderTextMessage(view: View) : RecyclerView.ViewHolder(view){
-    val blockUserMessage: ConstraintLayout = view.block_user_message
-    val chatUserMessage: TextView = view.chat_user_message
-    val chatUserMessageTime: TextView = view.chat_user_message_time
+class HolderTextMessage(view: View) : RecyclerView.ViewHolder(view), MessageHolder {
+    private val blockUserMessage: ConstraintLayout = view.block_user_message
+    private val chatUserMessage: TextView = view.chat_user_message
+    private val chatUserMessageTime: TextView = view.chat_user_message_time
 
-    val blockRecievedMessage: ConstraintLayout = view.block_recieved_message
-    val chatRecievedMessage: TextView = view.chat_recieved_message
-    val chatRecievedMessageTime: TextView = view.chat_recieved_message_time
+    private val blockRecievedMessage: ConstraintLayout = view.block_recieved_message
+    private val chatRecievedMessage: TextView = view.chat_recieved_message
+    private val chatRecievedMessageTime: TextView = view.chat_recieved_message_time
 
-    fun drawMessageText(view: MessageView) {
+    override fun drawMessage(view: MessageView) {
         if (view.from == CURRENT_UID) {
             blockUserMessage.visibility = View.VISIBLE
             blockRecievedMessage.visibility = View.GONE
@@ -30,5 +30,13 @@ class HolderTextMessage(view: View) : RecyclerView.ViewHolder(view){
             chatRecievedMessage.text = view.text
             chatRecievedMessageTime.text = view.timeStamp.asTime()
         }
+    }
+
+    override fun onAttach(view: MessageView) {
+
+    }
+
+    override fun onDetach() {
+
     }
 }
