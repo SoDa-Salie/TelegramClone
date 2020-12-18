@@ -197,6 +197,7 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
                 contact.id,
                 TYPE_TEXT
             ) {
+                saveToMainList(contact.id, TYPE_CHAT)
                 chat_input_message.setText("")
             }
         }

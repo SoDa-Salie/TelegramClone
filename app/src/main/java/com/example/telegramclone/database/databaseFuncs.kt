@@ -230,3 +230,24 @@ fun getFileFromStorage(mFile: File, fileUrl: String, function: () -> Unit) {
         .addOnSuccessListener { function() }
         .addOnFailureListener { showToast(it.message.toString()) }
 }
+
+fun saveToMainList(id: String, type: String) {
+    val refUser = "$NODE_MAIN_LIST/$CURRENT_UID/$id"
+    val refRecieved = "$NODE_MAIN_LIST/$id/$CURRENT_UID"
+
+    val mapUser = hashMapOf<String, Any>()
+    val mapRecieved = hashMapOf<String, Any>()
+
+    mapUser[CHILD_ID] = id
+    mapUser[CHILD_TYPE] = type
+
+    mapRecieved[CHILD_ID] = CURRENT_UID
+    mapRecieved[CHILD_TYPE] = type
+
+    val mapCommon = hashMapOf<String, Any>()
+    mapCommon[refUser] = mapUser
+    mapCommon[refRecieved] = mapRecieved
+
+    REF_DATABASE_ROOT.updateChildren(mapCommon)
+        .addOnFailureListener { showToast(it.message.toString()) }
+}
