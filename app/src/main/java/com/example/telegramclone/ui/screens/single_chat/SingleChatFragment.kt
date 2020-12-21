@@ -15,6 +15,7 @@ import com.example.telegramclone.models.CommonModel
 import com.example.telegramclone.models.UserModel
 import com.example.telegramclone.ui.screens.BaseFragment
 import com.example.telegramclone.ui.message_recycler_view.views.AppViewFactory
+import com.example.telegramclone.ui.screens.main_list.MainListFragment
 import com.example.telegramclone.ui.screens.settings.ChangeNameFragment
 import com.example.telegramclone.utilities.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -255,7 +256,14 @@ class SingleChatFragment(private val contact: CommonModel) : BaseFragment(R.layo
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
+            R.id.menu_clear_chat -> clearChat(contact.id) {
+                showToast("Чат очищен")
+                replaceFragment(MainListFragment())
+            }
+            R.id.menu_delete_chat -> deleteChat(contact.id) {
+                showToast("Чат удалён")
+                replaceFragment(MainListFragment())
+            }
         }
         return true
     }
