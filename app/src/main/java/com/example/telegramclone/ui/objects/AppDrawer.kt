@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.telegramclone.R
 import com.example.telegramclone.ui.screens.ContactsFragment
-import com.example.telegramclone.ui.screens.SettingsFragment
+import com.example.telegramclone.ui.screens.settings.SettingsFragment
 import com.example.telegramclone.utilities.APP_ACTIVITY
 import com.example.telegramclone.database.USER
 import com.example.telegramclone.utilities.downloadAndSetImage

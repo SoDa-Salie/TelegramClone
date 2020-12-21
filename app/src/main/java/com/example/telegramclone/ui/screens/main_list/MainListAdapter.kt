@@ -7,7 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.telegramclone.R
 import com.example.telegramclone.models.CommonModel
+import com.example.telegramclone.ui.screens.single_chat.SingleChatFragment
 import com.example.telegramclone.utilities.downloadAndSetImage
+import com.example.telegramclone.utilities.replaceFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.main_list_item.view.*
 
@@ -23,7 +25,12 @@ class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.main_list_item, parent, false)
-        return MainListHolder(view)
+
+        val holder = MainListHolder(view)
+        holder.itemView.setOnClickListener {
+            replaceFragment(SingleChatFragment(listItems[holder.adapterPosition]))
+        }
+        return holder
     }
 
     override fun onBindViewHolder(holder: MainListHolder, position: Int) {

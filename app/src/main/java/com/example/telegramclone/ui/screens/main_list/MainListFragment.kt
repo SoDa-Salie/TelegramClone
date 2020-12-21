@@ -57,6 +57,8 @@ class MainListFragment : Fragment(R.layout.fragment_main_list) {
         })
 
         mRecyclerView.adapter = mAdapter
-
     }
+
+
+
 }
