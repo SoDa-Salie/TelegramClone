@@ -43,4 +43,11 @@
     <string name="delete_chat">Удалить чат</string>
     <string name="create_group">Создать группу</string>
     <string name="add_member">Добавить участника</string>
+
+    <plurals name="count_members">
+        <item quantity="one">%d участник</item>
+        <item quantity="few">%d участника</item>
+        <item quantity="many">%d участников</item>
+        <item quantity="other">%d участников</item>
+    </plurals>
 </resources>
