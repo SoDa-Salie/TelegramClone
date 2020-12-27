@@ -1,4 +1,4 @@
-package com.example.telegramclone.ui.screens
+package com.example.telegramclone.ui.screens.contacts
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.telegramclone.R
 import com.example.telegramclone.database.*
 import com.example.telegramclone.models.CommonModel
+import com.example.telegramclone.ui.screens.base.BaseFragment
 import com.example.telegramclone.ui.screens.single_chat.SingleChatFragment
 import com.example.telegramclone.utilities.*
 import com.firebase.ui.database.FirebaseRecyclerAdapter

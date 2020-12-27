@@ -13,10 +13,9 @@ import com.example.telegramclone.R
 import com.example.telegramclone.database.*
 import com.example.telegramclone.models.CommonModel
 import com.example.telegramclone.models.UserModel
-import com.example.telegramclone.ui.screens.BaseFragment
+import com.example.telegramclone.ui.screens.base.BaseFragment
 import com.example.telegramclone.ui.message_recycler_view.views.AppViewFactory
 import com.example.telegramclone.ui.screens.main_list.MainListFragment
-import com.example.telegramclone.ui.screens.settings.ChangeNameFragment
 import com.example.telegramclone.utilities.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.database.DatabaseReference
