@@ -8,8 +8,8 @@ import com.example.telegramclone.models.CommonModel
 import com.example.telegramclone.utilities.APP_ACTIVITY
 import com.example.telegramclone.utilities.AppValueEventListener
 import com.example.telegramclone.utilities.hideKeyboard
+import com.example.telegramclone.utilities.replaceFragment
 import kotlinx.android.synthetic.main.fragment_add_contacts.*
-import kotlinx.android.synthetic.main.fragment_main_list.*
 
 
 class AddContactsFragment : Fragment(R.layout.fragment_add_contacts) {
@@ -23,14 +23,12 @@ class AddContactsFragment : Fragment(R.layout.fragment_add_contacts) {
 
     override fun onResume() {
         super.onResume()
-        APP_ACTIVITY.title = "Добавить участника"
+        APP_ACTIVITY.title = getString(R.string.add_member)
         APP_ACTIVITY.mAppDrawer.enableDrawer()
         hideKeyboard()
         initRecyclerView()
         add_contacts_btn_next.setOnClickListener {
-            listContacts.forEach {
-                println(it.id)
-            }
+            replaceFragment(CreateGroupFragment(listContacts))
         }
     }
 
@@ -48,21 +46,22 @@ class AddContactsFragment : Fragment(R.layout.fragment_add_contacts) {
                     val newModel = dataSnapshot1.getCommonModel()
 
                     //3 запрос
-                    mRefMessages.child(model.id).limitToLast(1).addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot2 ->
-                        val tempList = dataSnapshot2.children.map { it.getCommonModel() }
+                    mRefMessages.child(model.id).limitToLast(1)
+                        .addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot2 ->
+                            val tempList = dataSnapshot2.children.map { it.getCommonModel() }
 
-                        if (tempList.isEmpty()) {
-                            newModel.lastMessage = "Чат очищен"
-                        } else {
-                            newModel.lastMessage = tempList[0].text
-                        }
+                            if (tempList.isEmpty()) {
+                                newModel.lastMessage = "Чат очищен"
+                            } else {
+                                newModel.lastMessage = tempList[0].text
+                            }
 
-                        if(newModel.fullname.isEmpty()) {
-                            newModel.fullname = newModel.phone
-                        }
+                            if (newModel.fullname.isEmpty()) {
+                                newModel.fullname = newModel.phone
+                            }
 
-                        mAdapter.updateListItems(newModel)
-                    })
+                            mAdapter.updateListItems(newModel)
+                        })
                 })
             }
         })

@@ -7,13 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.telegramclone.R
 import com.example.telegramclone.models.CommonModel
-import com.example.telegramclone.ui.screens.single_chat.SingleChatFragment
 import com.example.telegramclone.utilities.downloadAndSetImage
-import com.example.telegramclone.utilities.replaceFragment
-import com.example.telegramclone.utilities.showToast
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.add_contacts_item.view.*
-import kotlinx.android.synthetic.main.main_list_item.view.*
 
 class AddContactsAdapter : RecyclerView.Adapter<AddContactsAdapter.AddContactsHolder>() {
 

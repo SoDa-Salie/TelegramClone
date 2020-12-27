@@ -42,28 +42,28 @@ class MainListFragment : Fragment(R.layout.fragment_main_list) {
                     val newModel = dataSnapshot1.getCommonModel()
 
                     //3 запрос
-                    mRefMessages.child(model.id).limitToLast(1).addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot2 ->
-                        val tempList = dataSnapshot2.children.map { it.getCommonModel() }
+                    mRefMessages.child(model.id).limitToLast(1)
+                        .addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot2 ->
+                            val tempList = dataSnapshot2.children.map { it.getCommonModel() }
 
-                        if (tempList.isEmpty()) {
-                            newModel.lastMessage = "Чат очищен"
-                        } else {
-                            newModel.lastMessage = tempList[0].text
-                        }
+                            if (tempList.isEmpty()) {
+                                newModel.lastMessage = "Чат очищен"
+                            } else {
+                                newModel.lastMessage = tempList[0].text
+                            }
 
-                        if(newModel.fullname.isEmpty()) {
-                            newModel.fullname = newModel.phone
-                        }
+                            if (newModel.fullname.isEmpty()) {
+                                newModel.fullname = newModel.phone
+                            }
 
-                        mAdapter.updateListItems(newModel)
-                    })
+                            mAdapter.updateListItems(newModel)
+                        })
                 })
             }
         })
 
         mRecyclerView.adapter = mAdapter
     }
-
 
 
 }

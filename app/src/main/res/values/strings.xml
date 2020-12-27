@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">TelegramClone</string>
-    <string name="create_group">Создать группу</string>
     <string name="create_secret_chat">Создать секретный чат</string>
     <string name="create_channel">Создать канал</string>
     <string name="contacts">Контакты</string>
@@ -42,4 +41,6 @@
     <string name="settings_input_hint_bio">Bio</string>
     <string name="clear_chat">Очистить чат</string>
     <string name="delete_chat">Удалить чат</string>
+    <string name="create_group">Создать группу</string>
+    <string name="add_member">Добавить участника</string>
 </resources>
